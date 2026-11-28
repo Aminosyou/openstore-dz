@@ -106,8 +106,10 @@ export function PurchasePanel({
       .join("\n"),
   );
 
+  const purchasable = selected !== null && selected.stock > 0;
+
   const handleAdd = () => {
-    if (!selected) return;
+    if (!selected || !purchasable) return;
     add(
       {
         variantId: selected.id,
@@ -140,7 +142,7 @@ export function PurchasePanel({
             type="button"
             onClick={() =>
               setQuantity((value) =>
-                Math.min(selected?.stock ?? MAX_PER_LINE, MAX_PER_LINE, value + 1),
+                Math.max(1, Math.min(selected?.stock ?? MAX_PER_LINE, MAX_PER_LINE, value + 1)),
               )
             }
             aria-label={`${t("common.quantity")} +`}
@@ -152,7 +154,7 @@ export function PurchasePanel({
         <button
           type="button"
           onClick={onOrder}
-          disabled={!selected || selected.stock <= 0}
+          disabled={!purchasable}
           className="store-btn store-btn--accent flex-1"
         >
           <ShoppingBag size={17} aria-hidden="true" />
@@ -163,6 +165,7 @@ export function PurchasePanel({
       <button
         type="button"
         onClick={handleAdd}
+        disabled={!purchasable}
         className="store-btn store-btn--ghost store-btn--block"
       >
         <Package size={16} aria-hidden="true" />
