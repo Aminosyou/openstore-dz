@@ -23,9 +23,12 @@ import { useStoreSettings, type CatalogueVariant } from "@/lib/queries";
 export function QuickOrder({
   selected,
   quantity,
+  purchasable = true,
 }: {
   selected: CatalogueVariant;
   quantity: number;
+  /** False when the buyer has switched to a size or colour with no stock. */
+  purchasable?: boolean;
 }) {
   const { t, locale } = useI18n();
   const { data: settings } = useStoreSettings();
@@ -52,6 +55,7 @@ export function QuickOrder({
 
   const submit = async (event: React.FormEvent) => {
     event.preventDefault();
+    if (!purchasable) return;
     setSubmitting(true);
     setError(null);
     const result = await placeOrder(toCustomer(form), [{ variant_id: selected.id, quantity }]);
@@ -118,12 +122,17 @@ export function QuickOrder({
         )}
         {row(t("common.total"), formatDzd(subtotal + (wilaya ? delivery.fee : 0), locale), true)}
       </dl>
+      {!purchasable && (
+        <p className="rounded-[2px] bg-tertiary/10 px-3 py-2 text-sm" role="status">
+          {t("store.outOfStock")}
+        </p>
+      )}
       {error && (
         <p className="rounded-[2px] bg-error/10 px-3 py-2 text-sm text-error" role="alert">
           {error}
         </p>
       )}
-      <Button type="submit" variant="berry" size="lg" disabled={submitting}>
+      <Button type="submit" variant="berry" size="lg" disabled={submitting || !purchasable}>
         {submitting ? t("checkout.placing") : t("quick.submit")}
       </Button>
     </form>

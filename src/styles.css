@@ -3434,815 +3434,113 @@ html[dir="rtl"] .store-collection-card .c-name {
   }
 }
 
-/* ── Anime hero ───────────────────────────────────────────────────────────── */
-/* A three-frame lookbook band runs full bleed behind the copy. The ink wash
-   keeps the type readable; the frames are the same files the grid uses. */
-.anime-hero {
-  --u-accent: #7ef0ff;
-  position: relative;
-  display: flex;
-  align-items: center;
-  min-height: 640px;
-  overflow: hidden;
-  border-bottom: 1px solid var(--outline);
-  background: var(--store-ink);
-  color: var(--store-paper);
-  isolation: isolate;
-}
-
-.anime-hero-gallery {
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 2px;
-  isolation: isolate;
-}
-
-.anime-hero-frame {
-  position: relative;
-  min-width: 0;
-  margin: 0;
-  overflow: hidden;
-  background: #101012;
-}
-
-.anime-hero-frame img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  filter: saturate(1) contrast(1.02);
-  transition: transform 1.2s var(--store-ease);
-}
-
-.anime-hero-frame:hover img {
-  transform: scale(1.025);
-}
-
-.anime-hero-gallery::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  background:
-    linear-gradient(
-      to right,
-      rgba(8, 8, 9, 0.98) 0%,
-      rgba(8, 8, 9, 0.9) 30%,
-      rgba(8, 8, 9, 0.42) 62%,
-      rgba(8, 8, 9, 0.12) 100%
-    ),
-    linear-gradient(to top, rgba(8, 8, 9, 0.72), transparent 32%);
-}
-
-html[dir="rtl"] .anime-hero-gallery::after {
-  background:
-    linear-gradient(
-      to left,
-      rgba(8, 8, 9, 0.98) 0%,
-      rgba(8, 8, 9, 0.9) 30%,
-      rgba(8, 8, 9, 0.42) 62%,
-      rgba(8, 8, 9, 0.12) 100%
-    ),
-    linear-gradient(to top, rgba(8, 8, 9, 0.72), transparent 32%);
-}
-
-.anime-hero-mark {
-  position: absolute;
-  inset-inline-end: 28px;
-  bottom: 20px;
-  z-index: 2;
-  font-family: var(--font-mono);
-  font-size: 9px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.72);
-}
-
-.anime-hero-inner {
-  position: relative;
-  z-index: 1;
-  display: grid;
-  grid-template-columns: minmax(0, 0.98fr) minmax(0, 1.02fr);
-  align-items: center;
-  width: 100%;
-  min-height: 640px;
-  padding-block: 64px;
-}
-
-/* The copy sits on a second, tighter ink wash. The gallery's own gradient
-   leaves the middle of the band readable; this one carries the title and the
-   intro over a white garment without turning the whole photograph to mud. */
-.anime-hero-inner::before {
-  content: "";
-  position: absolute;
-  inset-block: 0;
-  inset-inline-start: calc(var(--store-gutter) * -1);
-  width: min(760px, 60%);
-  background: linear-gradient(
-    to right,
-    rgba(8, 8, 9, 0.95) 0%,
-    rgba(8, 8, 9, 0.9) 62%,
-    rgba(8, 8, 9, 0) 100%
-  );
-  pointer-events: none;
-  z-index: -1;
-}
-
-html[dir="rtl"] .anime-hero-inner::before {
-  background: linear-gradient(
-    to left,
-    rgba(8, 8, 9, 0.95) 0%,
-    rgba(8, 8, 9, 0.9) 62%,
-    rgba(8, 8, 9, 0) 100%
-  );
-}
-
-.anime-hero-copy {
+/* ── Anime shop ───────────────────────────────────────────────────────────── */
+/* One page, one grid, four tabs. The tab row is the whole navigation: a
+   hairline box, the active one inverted to ink. Nothing nests below it. */
+.anime-shop-head {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  max-width: 640px;
+  gap: 10px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--outline);
 }
 
-.anime-hero .store-eyebrow {
-  color: var(--u-accent);
+.anime-shop-head .store-page-title {
+  margin-top: 6px;
 }
 
-.anime-hero .store-eyebrow::before {
-  background: var(--u-accent);
-}
-
-.anime-hero-title {
-  margin-top: 18px;
-  font-family: var(--font-display);
-  font-size: clamp(3.2rem, 7.4vw, 7.4rem);
-  font-weight: 800;
-  letter-spacing: -0.07em;
-  line-height: 0.82;
-  text-transform: uppercase;
-  color: var(--store-paper);
-  text-wrap: balance;
-}
-
-html[dir="rtl"] .anime-hero-title {
-  letter-spacing: 0;
-  line-height: 1.12;
-  padding-bottom: 0.16em;
-  text-transform: none;
-}
-
-.anime-hero-intro {
-  max-width: 42ch;
-  margin-top: 24px;
-  font-size: 14.5px;
-  line-height: 1.75;
-  color: rgba(245, 242, 233, 0.76);
-}
-
-.anime-hero-stats {
+.anime-tabs {
   display: flex;
-  gap: 38px;
-  width: 100%;
-  margin: 28px 0 0;
-  padding-top: 18px;
-  border-top: 1px solid var(--store-line-on-ink);
+  flex-wrap: wrap;
+  gap: 8px;
+  padding-block: 18px 26px;
 }
 
-.anime-hero-stats dt {
-  font-family: var(--font-mono);
-  font-size: 8.5px;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--store-on-ink-muted);
-}
-
-.anime-hero-stats dd {
-  margin: 5px 0 0;
-  font-family: var(--font-mono);
-  font-size: 15px;
-  letter-spacing: 0.02em;
-  color: var(--store-paper);
-}
-
-.anime-hero-cta {
-  margin-top: 28px;
-}
-
-.anime-hero .store-btn--accent {
-  background: var(--u-accent);
-  border-color: var(--u-accent);
-  color: var(--store-ink);
-}
-
-.anime-hero .store-btn--accent:hover {
-  background: transparent;
-  border-color: var(--u-accent);
-  color: var(--store-paper);
-}
-
-@media (max-width: 1023px) {
-  .anime-hero {
-    display: block;
-    min-height: 0;
-  }
-
-  .anime-hero-gallery {
-    position: relative;
-    height: 360px;
-  }
-
-  .anime-hero-gallery::after,
-  html[dir="rtl"] .anime-hero-gallery::after {
-    background: linear-gradient(to top, rgba(8, 8, 9, 0.96), rgba(8, 8, 9, 0.12) 74%);
-  }
-
-  .anime-hero-inner {
-    display: block;
-    min-height: 0;
-    padding-block: 30px 36px;
-  }
-
-  .anime-hero-inner::before {
-    display: none;
-  }
-
-  .anime-hero-title {
-    font-size: clamp(3rem, 14vw, 5rem);
-  }
-
-  .anime-hero-mark {
-    inset-inline-end: 16px;
-    bottom: 14px;
-  }
-}
-
-@media (max-width: 767px) {
-  .anime-hero-gallery {
-    display: flex;
-    gap: 6px;
-    height: 270px;
-    padding-inline: 16px;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    scrollbar-width: none;
-  }
-
-  .anime-hero-gallery::-webkit-scrollbar {
-    display: none;
-  }
-
-  .anime-hero-frame {
-    flex: 0 0 62vw;
-    height: 270px;
-    scroll-snap-align: start;
-  }
-
-  .anime-hero-cta {
-    margin-top: 24px;
-  }
-
-  .anime-hero-mark {
-    position: absolute;
-    inset-inline-end: 20px;
-    bottom: 12px;
-  }
-}
-
-/* ── Anime collections ────────────────────────────────────────────────────── */
-/* Three across so the nine series read as a clean 3 x 3 grid. The card is a
-   full-bleed cover; the live count on top is the honest part. */
-.anime-collection-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 12px;
-}
-
-.anime-collection-card {
-  aspect-ratio: 4 / 5;
-  min-height: 0;
-  padding: 18px;
-  background: var(--store-ink);
-}
-
-.anime-collection-card::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  inset-inline: 0;
-  z-index: 2;
-  height: 1px;
-  background: linear-gradient(to right, var(--u-accent), transparent 55%);
-  opacity: 0.75;
-}
-
-html[dir="rtl"] .anime-collection-card::before {
-  background: linear-gradient(to left, var(--u-accent), transparent 55%);
-}
-
-.anime-collection-card img {
-  z-index: 0;
-  filter: saturate(1.02) contrast(1.01);
-  transition:
-    transform 0.9s var(--store-ease),
-    filter 0.4s var(--store-ease);
-}
-
-.anime-collection-card.has-image::after {
-  z-index: 1;
-  background: linear-gradient(
-    to top,
-    rgba(8, 8, 9, 0.94) 0%,
-    rgba(8, 8, 9, 0.72) 22%,
-    rgba(8, 8, 9, 0.06) 58%,
-    rgba(8, 8, 9, 0.38) 100%
-  );
-}
-
-.anime-collection-card:hover img {
-  transform: scale(1.03);
-  filter: saturate(1.06) contrast(1.02);
-}
-
-.anime-collection-card .a-top {
-  position: absolute;
-  top: 16px;
-  inset-inline: 16px;
-  z-index: 3;
-  display: flex;
+.anime-tab {
+  display: inline-flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-}
-
-.anime-collection-card .c-index {
-  position: static;
-  top: auto;
-  inset-inline-start: auto;
+  gap: 8px;
+  min-height: 42px;
+  padding: 0 16px;
+  border: 1px solid var(--outline);
+  background: transparent;
+  color: var(--on-surface);
   font-family: var(--font-mono);
   font-size: 10px;
-  letter-spacing: 0.18em;
-  color: var(--u-accent);
-  opacity: 1;
-}
-
-.anime-collection-card .c-count {
-  color: rgba(247, 244, 236, 0.74);
-  opacity: 1;
-}
-
-.anime-collection-card .a-body {
-  position: relative;
-  z-index: 3;
-  display: flex;
-  flex-direction: column;
-  gap: 7px;
-}
-
-.anime-collection-card .a-alt {
-  font-family: var(--font-mono);
-  font-size: 9px;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--u-accent);
-}
-
-html[dir="rtl"] .anime-collection-card .a-alt {
-  letter-spacing: 0;
-}
-
-.anime-collection-card .c-name {
-  margin-top: 0;
-  font-size: clamp(1.6rem, 2.4vw, 2.35rem);
-  line-height: 0.94;
-}
-
-html[dir="rtl"] .anime-collection-card .c-name {
-  line-height: 1.12;
-}
-
-.anime-collection-card .a-rule {
-  position: absolute;
-  inset-inline-start: 18px;
-  bottom: 0;
-  z-index: 3;
-  width: 44px;
-  height: 2px;
-  background: var(--u-accent);
-  transition: width 0.5s var(--store-ease);
-}
-
-.anime-collection-card:hover .a-rule,
-.anime-collection-card:focus-visible .a-rule {
-  width: calc(100% - 36px);
-}
-
-.anime-collection-card:focus-visible {
-  outline: 2px solid var(--u-accent);
-  outline-offset: 3px;
-}
-
-.anime-grid-meta {
-  display: flex;
-  align-items: baseline;
-  gap: 10px;
-  margin: 0;
-  font-family: var(--font-mono);
-  font-size: 9px;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--on-surface-muted);
-  white-space: nowrap;
-}
-
-.anime-grid-meta span {
-  font-family: var(--font-display);
-  font-size: 30px;
-  font-weight: 800;
-  letter-spacing: -0.05em;
-  line-height: 1;
-  color: var(--on-surface);
-}
-
-@media (max-width: 1023px) {
-  .anime-collection-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-@media (max-width: 767px) {
-  .anime-grid-meta {
-    display: none;
-  }
-}
-
-@media (max-width: 479px) {
-  .anime-collection-grid {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 10px;
-  }
-
-  .anime-collection-card .c-name {
-    font-size: clamp(1.9rem, 9vw, 2.4rem);
-  }
-}
-
-/* Dandadan has no T-shirt photograph yet: the card is a deliberate grey studio
-   plate, not a broken image. It shares the same backdrop as the photographs. */
-.anime-collection-card.no-image {
-  color: var(--store-paper);
-  background:
-    radial-gradient(90% 70% at 80% 0%, rgba(255, 255, 255, 0.06), transparent 60%),
-    repeating-linear-gradient(-45deg, transparent 0 24px, rgba(255, 255, 255, 0.025) 24px 25px),
-    #3a3a3d;
-}
-
-.anime-collection-card.no-image::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  background: linear-gradient(
-    to top,
-    rgba(8, 8, 9, 0.92) 0%,
-    rgba(8, 8, 9, 0.55) 30%,
-    rgba(8, 8, 9, 0) 62%
-  );
-}
-
-.anime-collection-card .a-watermark {
-  position: absolute;
-  inset-inline-end: 14px;
-  bottom: 44px;
-  z-index: 2;
-  font-family: var(--font-display);
-  font-size: clamp(6rem, 11vw, 9rem);
-  font-weight: 800;
-  letter-spacing: -0.08em;
-  line-height: 0.8;
-  color: rgba(247, 244, 236, 0.1);
-  pointer-events: none;
-}
-
-/* ── Anime shapes, browse and filters ─────────────────────────────────────── */
-/* The two shapes the Anime drop is made of, then the page that lists every
-   piece with the filters a buyer actually uses. Same paper and ink, same rules:
-   one hairline border, no shadow, the accent only on the index. */
-.anime-types {
-  padding-block: 56px;
-  border-top: 1px solid var(--outline);
-}
-
-.anime-type-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
-  margin-top: 26px;
-}
-
-.anime-type-card {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  min-height: 210px;
-  padding: 22px;
-  border: 1px solid var(--outline);
-  background: var(--surface);
   transition:
-    border-color 0.18s var(--store-ease),
-    transform 0.18s var(--store-ease);
+    background-color 0.15s var(--store-ease),
+    color 0.15s var(--store-ease),
+    border-color 0.15s var(--store-ease);
 }
 
-.anime-type-card:hover {
+.anime-tab:hover {
   border-color: var(--on-surface);
-  transform: translateY(-2px);
 }
 
-.anime-type-card:focus-visible {
+.anime-tab[data-active] {
+  background: var(--on-surface);
+  border-color: var(--on-surface);
+  color: var(--surface);
+}
+
+.anime-tab:focus-visible {
   outline: 2px solid var(--on-surface);
   outline-offset: 2px;
 }
 
-.anime-type-index {
-  /* The accent is a highlight colour: as type on paper it is invisible, so the
-     number takes the muted ink and the accent becomes the rule beside it. */
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-family: var(--font-mono);
+.anime-tab-count {
   font-size: 9px;
-  letter-spacing: 0.16em;
-  color: var(--on-surface-muted);
+  opacity: 0.65;
 }
 
-.anime-type-index::before {
-  content: "";
-  width: 18px;
-  height: 2px;
-  background: var(--u-accent);
-}
-
-.anime-type-name {
-  margin-top: auto;
-  font-family: var(--font-display);
-  font-size: clamp(1.7rem, 3vw, 2.6rem);
-  font-weight: 800;
-  letter-spacing: -0.045em;
-  line-height: 0.95;
-  text-transform: uppercase;
-  color: var(--on-surface);
-}
-
-html[dir="rtl"] .anime-type-name {
+html[dir="rtl"] .anime-tab {
+  font-family: inherit;
+  font-size: 13px;
   letter-spacing: 0;
   text-transform: none;
 }
 
-.anime-type-body {
-  max-width: 34ch;
-  font-size: 13px;
-  line-height: 1.6;
-  color: var(--on-surface-muted);
-}
-
-.anime-type-count {
-  font-family: var(--font-mono);
-  font-size: 9px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--on-surface-muted);
-}
-
-.anime-type-arrow {
-  position: absolute;
-  top: 18px;
-  inset-inline-end: 18px;
-  color: var(--on-surface-muted);
-}
-
-.anime-type-card:hover .anime-type-arrow {
-  color: var(--on-surface);
-}
-
-.anime-browse-head {
-  padding-block: 4px 24px;
-}
-
-.anime-browse-head .store-page-title {
-  margin-block: 10px 14px;
-}
-
-.anime-filters {
+.anime-empty {
   display: flex;
   flex-direction: column;
-  gap: 14px;
-  padding-block: 18px;
-  border-top: 1px solid var(--outline);
-  border-bottom: 1px solid var(--outline);
-}
-
-.anime-search {
-  display: flex;
   align-items: center;
-  gap: 10px;
-}
-
-.anime-search-input {
-  flex: 1;
-  min-width: 0;
-  min-height: 40px;
-  padding: 0 12px;
+  gap: 12px;
+  padding: 64px 16px;
   border: 1px solid var(--outline);
   background: var(--surface);
-  color: var(--on-surface);
-  font: inherit;
+  text-align: center;
 }
 
-.anime-search-input:focus-visible {
-  outline: 2px solid var(--on-surface);
-  outline-offset: 1px;
+.anime-empty h2 {
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  font-weight: 800;
 }
 
-.anime-filter-row {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 8px;
-}
-
-.anime-filter-label {
-  min-width: 64px;
-  font-family: var(--font-mono);
-  font-size: 8.5px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
+.anime-empty p {
+  max-width: 44ch;
   color: var(--on-surface-muted);
-}
-
-.anime-sort {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.anime-browse-count {
-  padding-block: 16px;
-  font-family: var(--font-mono);
-  font-size: 9.5px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--on-surface-muted);
-}
-
-.anime-pieces-head {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
+  font-size: 14px;
+  line-height: 1.6;
 }
 
 @media (max-width: 767px) {
-  .anime-types {
-    padding-block: 40px;
-  }
-
-  /* The section head keeps its button beside the heading on desktop; on a phone
-     that squeezes "all anime pieces" into two broken lines, so it stacks. */
-  .anime-types .store-section-head {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 14px;
-  }
-
-  .anime-type-grid {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  .anime-type-card {
-    min-height: 170px;
-    padding: 18px;
-  }
-
-  .anime-filter-label {
-    min-width: 100%;
-  }
-}
-
-/* ── Anime hoodies ────────────────────────────────────────────────────────── */
-/* The hoodie side of the same drop. A dark band separates it from the tee grid
-   and the rail scrolls; no price and no stock claim on the cards. */
-.anime-hoodies {
-  padding-block: 68px;
-  background: #1b1b1e;
-  color: var(--store-paper);
-  border-top: 1px solid var(--outline);
-}
-
-.anime-hoodies .store-section-head {
-  margin-bottom: 24px;
-  border-color: var(--store-line-on-ink);
-}
-
-.anime-hoodies .store-eyebrow {
-  color: var(--u-accent);
-}
-
-.anime-hoodies .store-eyebrow::before {
-  background: var(--u-accent);
-}
-
-.anime-hoodies .store-section-title {
-  color: var(--store-paper);
-}
-
-.anime-hoodies .store-section-lede {
-  color: var(--store-on-ink-muted);
-}
-
-.anime-hoodies .anime-grid-meta {
-  color: var(--store-on-ink-muted);
-}
-
-.anime-hoodies .anime-grid-meta span {
-  color: var(--store-paper);
-}
-
-.anime-hoodies-rail {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 12px;
-}
-
-.anime-hoodie-card {
-  width: auto;
-}
-
-@media (max-width: 1023px) {
-  .anime-hoodies-rail {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-@media (max-width: 767px) {
-  .anime-hoodies {
-    padding-block: 48px;
-  }
-
-  .anime-hoodies-rail {
-    display: flex;
-    gap: 10px;
-    padding-bottom: 4px;
+  .anime-tabs {
+    flex-wrap: nowrap;
+    padding-bottom: 18px;
     overflow-x: auto;
-    scroll-snap-type: x mandatory;
     scrollbar-width: none;
   }
 
-  .anime-hoodies-rail::-webkit-scrollbar {
+  .anime-tabs::-webkit-scrollbar {
     display: none;
   }
 
-  .anime-hoodie-card {
-    flex: 0 0 72vw;
-    scroll-snap-align: start;
+  .anime-tab {
+    flex: none;
   }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .anime-hero-frame img,
-  .anime-collection-card img,
-  .anime-collection-card .a-rule {
-    transition: none;
-  }
-
-  .anime-hero-frame:hover img,
-  .anime-collection-card:hover img {
-    transform: none;
-  }
-}
-
-/* Return link on a collection's own catalogue. */
-.store-back-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  margin-bottom: 18px;
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--on-surface-muted);
-  text-decoration: none;
-}
-
-.store-back-link:hover {
-  color: var(--on-surface);
-}
-
-html[dir="rtl"] .store-back-link svg {
-  transform: scaleX(-1);
 }
 
 /* ── Trust, promo, reviews, closing ───────────────────────────────────────── */

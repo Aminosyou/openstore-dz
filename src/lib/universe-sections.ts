@@ -86,7 +86,7 @@ const categoryEntry = (slug: string, labelKey: TranslationKey): SectionEntry => 
  * Everything else is "Other anime". The Anime page draws these as cards, and
  * `/anime/$series` only accepts a key from this list.
  */
-export const ANIME_COLLECTIONS = [
+const ANIME_COLLECTIONS = [
   "attack-on-titan",
   "blue-lock",
   "dandadan",
@@ -97,10 +97,6 @@ export const ANIME_COLLECTIONS = [
   "naruto",
   "one-piece",
 ] as const;
-
-export function isAnimeCollection(key: string): boolean {
-  return (ANIME_COLLECTIONS as readonly string[]).includes(key);
-}
 
 /** The five clubs per region the brief promotes; the rest are "Other clubs". */
 const PRIMARY_CLUBS = {

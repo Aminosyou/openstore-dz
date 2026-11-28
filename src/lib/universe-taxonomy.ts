@@ -41,8 +41,12 @@ export const PIECE_TYPES: PieceType[] = [
       "ensemble",
       "ensembles",
       "survêtement",
+      "jogger",
+      "joggers",
+      "jogging",
       "طقم رياضي",
       "بدلة رياضية",
+      "جوجر",
     ],
   },
   {

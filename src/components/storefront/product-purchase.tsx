@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Check, MessageCircle, Package } from "lucide-react";
+import { Check, MessageCircle, Package, ShoppingBag } from "lucide-react";
 import { useI18n } from "@/lib/i18n-context";
 import { formatDzd } from "@/lib/format";
 import { MAX_PER_LINE, useCart } from "@/lib/cart";
@@ -9,8 +9,9 @@ import { saleOf } from "@/lib/sale";
 
 /**
  * The parts of a product page that actually sell something: stock, quantity,
- * add to cart and the WhatsApp order path. Split from `product-detail.tsx`
- * because everything here is an action and everything there is presentation.
+ * the Commander button, add to cart and the WhatsApp path. Split from
+ * `product-detail.tsx` because everything here is an action and everything
+ * there is presentation.
  */
 function variantLabel(variant: CatalogueVariant): string {
   const parts = [variant.size, variant.color_name].filter(Boolean);
@@ -68,13 +69,14 @@ export function StockLine({
   );
 }
 
-export function AddToCart({
+export function PurchasePanel({
   product,
   name,
   selected,
   images,
   quantity,
   setQuantity,
+  onOrder,
 }: {
   product: CatalogueProduct;
   name: string;
@@ -82,6 +84,8 @@ export function AddToCart({
   images: string[];
   quantity: number;
   setQuantity: React.Dispatch<React.SetStateAction<number>>;
+  /** Opens the order form below the panel. */
+  onOrder: () => void;
 }) {
   const { t, locale } = useI18n();
   const { add } = useCart();
@@ -145,11 +149,25 @@ export function AddToCart({
           </button>
         </span>
 
-        <button type="button" onClick={handleAdd} className="store-btn store-btn--accent flex-1">
-          <Package size={17} aria-hidden="true" />
-          {t("store.addToCart")}
+        <button
+          type="button"
+          onClick={onOrder}
+          disabled={!selected || selected.stock <= 0}
+          className="store-btn store-btn--accent flex-1"
+        >
+          <ShoppingBag size={17} aria-hidden="true" />
+          {t("store.orderNow")}
         </button>
       </div>
+
+      <button
+        type="button"
+        onClick={handleAdd}
+        className="store-btn store-btn--ghost store-btn--block"
+      >
+        <Package size={16} aria-hidden="true" />
+        {t("store.addToCart")}
+      </button>
 
       {waHref && (
         <a

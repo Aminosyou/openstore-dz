@@ -1,0 +1,73 @@
+import { describe, expect, it } from "vitest";
+import type { CatalogueProduct } from "./queries";
+import { animeCounts, filterAnime, inShape, parseAnimeTab } from "./anime-shop";
+
+function product(overrides: Partial<CatalogueProduct> = {}): CatalogueProduct {
+  return {
+    id: overrides.slug ?? "id",
+    slug: "piece",
+    name: "قطعة",
+    name_fr: null,
+    description: null,
+    description_fr: null,
+    kind: "single",
+    status: "published",
+    category_id: null,
+    categories: null,
+    published_at: "2026-01-01T00:00:00.000Z",
+    product_variants: [],
+    ...overrides,
+  } as CatalogueProduct;
+}
+
+const hoodie = product({ slug: "hoodie-naruto", name: "هودي ناروتو" });
+const tee = product({ slug: "tee-naruto", name: "تي شيرت ناروتو" });
+const set = product({ slug: "set-naruto", name: "طقم رياضي ناروتو" });
+const jogger = product({ slug: "jogger-naruto", name: "jogger naruto" });
+const polo = product({ slug: "polo", name: "polo piqué" });
+const all = [hoodie, tee, set, jogger, polo];
+
+describe("anime shop tabs", () => {
+  it("shows every anime piece under all products", () => {
+    expect(filterAnime(all, "all").map((p) => p.slug)).toEqual([
+      "hoodie-naruto",
+      "tee-naruto",
+      "set-naruto",
+      "jogger-naruto",
+    ]);
+  });
+
+  it("narrows to hoodies", () => {
+    expect(filterAnime(all, "hoodie").map((p) => p.slug)).toEqual(["hoodie-naruto"]);
+  });
+
+  it("narrows to tees", () => {
+    expect(filterAnime(all, "tee").map((p) => p.slug)).toEqual(["tee-naruto"]);
+  });
+
+  it("files ensembles and joggers under sets", () => {
+    expect(filterAnime(all, "sets").map((p) => p.slug)).toEqual(["set-naruto", "jogger-naruto"]);
+  });
+
+  it("keeps a non-anime piece out of every tab", () => {
+    for (const tab of ["all", "hoodie", "sets", "tee"] as const) {
+      expect(filterAnime(all, tab).some((p) => p.slug === "polo")).toBe(false);
+    }
+  });
+
+  it("counts each tab", () => {
+    expect(animeCounts(all)).toEqual({ all: 4, hoodie: 1, sets: 2, tee: 1 });
+  });
+
+  it("treats an unknown shape as a piece with no shape", () => {
+    expect(inShape(["other"], "hoodie")).toBe(false);
+    expect(inShape(["other"], "sets")).toBe(false);
+    expect(inShape(["other"], "tee")).toBe(false);
+  });
+
+  it("falls back to the default tab", () => {
+    expect(parseAnimeTab("hoodie")).toBe("hoodie");
+    expect(parseAnimeTab("collections")).toBe("all");
+    expect(parseAnimeTab(undefined)).toBe("all");
+  });
+});

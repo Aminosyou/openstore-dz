@@ -78,6 +78,7 @@ export const enStorefront = {
   "store.inStock": "In stock",
   "store.lowStock": "Only {count} left",
   "store.addToCart": "Add to cart",
+  "store.orderNow": "Order now",
   "store.orderViaWhatsapp": "Order on WhatsApp",
   "store.waOrderIntro": "Hello, I would like to order:",
   "store.viewDetails": "Details",

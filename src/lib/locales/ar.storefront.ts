@@ -76,6 +76,7 @@ export const arStorefront = {
   "store.inStock": "متوفر",
   "store.lowStock": "آخر {count} قطع",
   "store.addToCart": "أضف إلى السلة",
+  "store.orderNow": "اطلب الآن",
   "store.orderViaWhatsapp": "اطلب عبر واتساب",
   "store.waOrderIntro": "مرحبا، أريد أن أطلب:",
   "store.viewDetails": "التفاصيل",

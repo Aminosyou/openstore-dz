@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { Banknote, RotateCcw, ShieldCheck, Truck } from "lucide-react";
 import { useI18n } from "@/lib/i18n-context";
@@ -8,6 +8,7 @@ import {
   useReviews,
   useStoreSettings,
   type CatalogueProduct,
+  type CatalogueVariant,
 } from "@/lib/queries";
 import {
   colourOptions,
@@ -19,7 +20,7 @@ import {
 } from "@/lib/variant-options";
 import { StarRating } from "./star-rating";
 import { ProductGallery } from "./product-gallery";
-import { AddToCart, StockLine } from "./product-purchase";
+import { PurchasePanel, StockLine } from "./product-purchase";
 import { QuickOrder } from "./quick-order";
 import { localized } from "@/lib/i18n";
 import { ColourPicker, SizePicker } from "./variant-picker";
@@ -43,6 +44,7 @@ export function ProductDetail({ product }: { product: CatalogueProduct }) {
   const [choice, setChoice] = useState(() => initialChoice(variants));
   const [quantity, setQuantity] = useState(1);
   const [activeImage, setActiveImage] = useState(0);
+  const [orderOpen, setOrderOpen] = useState(false);
 
   const colours = colourOptions(variants);
   const sizes = sizeOptions(variants, colours.length > 0 ? choice.colour : null);
@@ -102,17 +104,21 @@ export function ProductDetail({ product }: { product: CatalogueProduct }) {
           <ColourPicker colours={colours} selected={choice.colour} onSelect={pickColour} />
           <SizePicker sizes={sizes} selected={choice.size} onSelect={pickSize} />
 
-          {stockable.length > 0 && selected && selected.stock > 0 && (
-            <AddToCart
+          {(stockable.length > 0 || orderOpen) && (
+            <PurchasePanel
               product={product}
               name={name}
               selected={selected}
               images={images}
               quantity={quantity}
               setQuantity={setQuantity}
+              onOrder={() => setOrderOpen(true)}
             />
           )}
-          {selected && selected.stock > 0 && <QuickOrder selected={selected} quantity={quantity} />}
+
+          {orderOpen && selected && (
+            <OrderForm selected={selected} quantity={quantity} purchasable={selected.stock > 0} />
+          )}
 
           <div className="store-delivery-card">
             <div>
@@ -150,6 +156,28 @@ export function ProductDetail({ product }: { product: CatalogueProduct }) {
       </div>
     </div>
   );
+}
+
+/** The order form, opened by Commander and scrolled into view once. */
+function OrderForm({
+  selected,
+  quantity,
+  purchasable,
+}: {
+  selected: CatalogueVariant;
+  quantity: number;
+  purchasable: boolean;
+}) {
+  useEffect(() => {
+    // Wait for the form to paint before scrolling to it, so a phone lands on
+    // the first field rather than half-way down the panel.
+    const id = window.setTimeout(() => {
+      document.getElementById("order-form")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 60);
+    return () => window.clearTimeout(id);
+  }, []);
+
+  return <QuickOrder selected={selected} quantity={quantity} purchasable={purchasable} />;
 }
 
 function ProductBreadcrumb({
