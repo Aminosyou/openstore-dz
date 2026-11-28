@@ -71,3 +71,43 @@ describe("anime shop tabs", () => {
     expect(parseAnimeTab(undefined)).toBe("all");
   });
 });
+
+describe("tab addresses", () => {
+  it("accepts the canonical tabs", () => {
+    expect(parseAnimeTab("hoodie")).toBe("hoodie");
+    expect(parseAnimeTab("sets")).toBe("sets");
+    expect(parseAnimeTab("tee")).toBe("tee");
+    expect(parseAnimeTab("all")).toBe("all");
+  });
+
+  it("reads the older spellings of each shape", () => {
+    expect(parseAnimeTab("tracksuit")).toBe("sets");
+    expect(parseAnimeTab("tshirt")).toBe("tee");
+    expect(parseAnimeTab("t-shirt")).toBe("tee");
+    expect(parseAnimeTab("T-Shirt")).toBe("tee");
+    expect(parseAnimeTab("tees")).toBe("tee");
+    expect(parseAnimeTab("tracksuit ")).toBe("sets");
+  });
+
+  it("falls back to every piece on anything else", () => {
+    expect(parseAnimeTab("collections")).toBe("all");
+    expect(parseAnimeTab("")).toBe("all");
+    expect(parseAnimeTab(null)).toBe("all");
+    expect(parseAnimeTab(42)).toBe("all");
+  });
+
+  it("filters with the tab its address resolves to", () => {
+    expect(filterAnime(all, parseAnimeTab("tracksuit")).map((p) => p.slug)).toEqual([
+      "set-naruto",
+      "jogger-naruto",
+    ]);
+    expect(filterAnime(all, parseAnimeTab("tshirt")).map((p) => p.slug)).toEqual(["tee-naruto"]);
+    expect(filterAnime(all, parseAnimeTab("t-shirt")).map((p) => p.slug)).toEqual(["tee-naruto"]);
+    expect(filterAnime(all, parseAnimeTab("sets")).map((p) => p.slug)).toEqual([
+      "set-naruto",
+      "jogger-naruto",
+    ]);
+    expect(filterAnime(all, parseAnimeTab("tee")).map((p) => p.slug)).toEqual(["tee-naruto"]);
+    expect(filterAnime(all, parseAnimeTab("nonsense"))).toHaveLength(4);
+  });
+});

@@ -18,13 +18,30 @@ export const ANIME_TABS: readonly AnimeTab[] = ["all", "hoodie", "sets", "tee"];
 
 export type AnimeShape = Exclude<AnimeTab, "all">;
 
-function isAnimeTab(value: unknown): value is AnimeTab {
+function isAnimeTab(value: string): value is AnimeTab {
   return value === "all" || value === "hoodie" || value === "sets" || value === "tee";
 }
 
+/**
+ * Older addresses that mean a canonical tab.
+ *
+ * The shapes were named once as "tracksuit" and "t-shirt"; a link already
+ * shared or bookmarked has to keep landing on the right shelf, so the old
+ * spellings are read as the canonical ones.
+ */
+const TAB_ALIASES: Record<string, AnimeTab> = {
+  tracksuit: "sets",
+  tshirt: "tee",
+  "t-shirt": "tee",
+  tees: "tee",
+};
+
 /** An unknown or missing tab is the default: every piece. */
 export function parseAnimeTab(value: unknown): AnimeTab {
-  return isAnimeTab(value) ? value : "all";
+  if (typeof value !== "string") return "all";
+  const key = value.trim().toLowerCase();
+  if (isAnimeTab(key)) return key;
+  return TAB_ALIASES[key] ?? "all";
 }
 
 /** Whether a piece is shown under one shape. A set can also be a hoodie set. */
