@@ -67,6 +67,12 @@ export const arShop = {
   "universe.anime.collectionsBody":
     "تسع سلاسل، كل واحدة بكاتالوغها الخاص. اختر سلسلتك ولن ترى إلا قطعها.",
   "universe.anime.backToCollections": "العودة إلى السلاسل",
+  "universe.anime.coverAltTee": "تي شيرت أوفرسايز بتصميم أنيمي",
+  "universe.anime.hoodiesEyebrow": "الوجه الآخر للتشكيلة",
+  "universe.anime.hoodiesTitle": "هوديات الأنيمي",
+  "universe.anime.hoodiesBody": "هوديات أوفرسايز من نفس السلاسل. صور من تشكيلة ELITEWEAR.",
+  "universe.anime.hoodieLabel": "هودي",
+  "universe.anime.hoodieAlt": "هودي أوفرسايز بتصميم أنيمي",
   "universe.algeria.kicker": "تصميم جزائري",
   "universe.algeria.title": "عالم الجزائر",
   "universe.algeria.intro":

@@ -70,6 +70,13 @@ export const enShop = {
   "universe.anime.collectionsBody":
     "Nine series, each with its own catalogue. Pick yours and you will only see its pieces.",
   "universe.anime.backToCollections": "Back to the series",
+  "universe.anime.coverAltTee": "oversized anime graphic T-shirt",
+  "universe.anime.hoodiesEyebrow": "The other side of the drop",
+  "universe.anime.hoodiesTitle": "Anime hoodies",
+  "universe.anime.hoodiesBody":
+    "Oversized hoodies from the same series. Photography from the ELITEWEAR drop.",
+  "universe.anime.hoodieLabel": "Hoodie",
+  "universe.anime.hoodieAlt": "oversized anime graphic hoodie",
   "universe.algeria.kicker": "Algeria Design",
   "universe.algeria.title": "Algeria Universe",
   "universe.algeria.intro":

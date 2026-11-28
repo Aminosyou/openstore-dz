@@ -6,8 +6,10 @@ import { productFacets } from "@/lib/product-facets";
 import { ANIME_COLLECTIONS } from "@/lib/universe-sections";
 import { buildUniverse } from "@/lib/universes";
 import { AnimeCollectionsGrid } from "./anime-collections";
+import { AnimeHero } from "./anime-hero";
+import { AnimeHoodies } from "./anime-hoodies";
 import { ProductRail } from "./home-rails";
-import { CrossUniverses, UniverseHero } from "./universe-hero";
+import { CrossUniverses } from "./universe-hero";
 
 /**
  * The Anime universe, collection first.
@@ -55,7 +57,7 @@ export function AnimeBrowser() {
 
   return (
     <div>
-      <UniverseHero catalog={catalog} universe="anime" ctaKey="universe.anime.viewCollections" />
+      <AnimeHero seriesCount={ANIME_COLLECTIONS.length} pieceCount={catalog.members.length} />
 
       <section
         id="pieces"
@@ -68,10 +70,16 @@ export function AnimeBrowser() {
             <h2 className="store-section-title">{t("universe.anime.collectionsTitle")}</h2>
             <p className="store-section-lede">{t("universe.anime.collectionsBody")}</p>
           </div>
+          <p className="anime-grid-meta">
+            <span>{String(ANIME_COLLECTIONS.length).padStart(2, "0")}</span>
+            {t("universe.series")}
+          </p>
         </div>
 
         <AnimeCollectionsGrid products={catalog.members} />
       </section>
+
+      <AnimeHoodies />
 
       {otherPieces.length > 0 && (
         <ProductRail

@@ -72,6 +72,12 @@ export const frShop = {
   "universe.anime.collectionsBody":
     "Neuf séries, chacune avec son catalogue. Choisissez la vôtre et vous ne verrez que ses pièces.",
   "universe.anime.backToCollections": "Retour aux séries",
+  "universe.anime.coverAltTee": "t-shirt oversize à motif anime",
+  "universe.anime.hoodiesEyebrow": "L'autre face du drop",
+  "universe.anime.hoodiesTitle": "Hoodies anime",
+  "universe.anime.hoodiesBody": "Des hoodies oversize des mêmes séries. Photos du drop ELITEWEAR.",
+  "universe.anime.hoodieLabel": "Hoodie",
+  "universe.anime.hoodieAlt": "hoodie oversize à motif anime",
   "universe.algeria.kicker": "Algeria Design",
   "universe.algeria.title": "Univers Algérie",
   "universe.algeria.intro":
