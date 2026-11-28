@@ -3966,10 +3966,22 @@ html[dir="rtl"] .anime-collection-card .c-name {
 }
 
 .anime-type-index {
+  /* The accent is a highlight colour: as type on paper it is invisible, so the
+     number takes the muted ink and the accent becomes the rule beside it. */
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   font-family: var(--font-mono);
   font-size: 9px;
   letter-spacing: 0.16em;
-  color: var(--u-accent);
+  color: var(--on-surface-muted);
+}
+
+.anime-type-index::before {
+  content: "";
+  width: 18px;
+  height: 2px;
+  background: var(--u-accent);
 }
 
 .anime-type-name {
@@ -4095,6 +4107,14 @@ html[dir="rtl"] .anime-type-name {
 @media (max-width: 767px) {
   .anime-types {
     padding-block: 40px;
+  }
+
+  /* The section head keeps its button beside the heading on desktop; on a phone
+     that squeezes "all anime pieces" into two broken lines, so it stacks. */
+  .anime-types .store-section-head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
   }
 
   .anime-type-grid {
