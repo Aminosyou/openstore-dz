@@ -70,7 +70,7 @@ export const arShop = {
   "universe.anime.coverAltTee": "تي شيرت أوفرسايز بتصميم أنيمي",
   "universe.anime.hoodiesEyebrow": "الوجه الآخر للتشكيلة",
   "universe.anime.hoodiesTitle": "هوديات الأنيمي",
-  "universe.anime.hoodiesBody": "هوديات أوفرسايز من نفس السلاسل. صور من تشكيلة ELITEWEAR.",
+  "universe.anime.hoodiesBody": "هوديات أوفرسايز من نفس السلاسل.",
   "universe.anime.hoodieLabel": "هودي",
   "universe.anime.hoodieAlt": "هودي أوفرسايز بتصميم أنيمي",
   "universe.anime.shopByType": "تسوق حسب الشكل",

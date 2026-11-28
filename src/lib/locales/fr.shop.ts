@@ -75,7 +75,7 @@ export const frShop = {
   "universe.anime.coverAltTee": "t-shirt oversize à motif anime",
   "universe.anime.hoodiesEyebrow": "L'autre face du drop",
   "universe.anime.hoodiesTitle": "Hoodies anime",
-  "universe.anime.hoodiesBody": "Des hoodies oversize des mêmes séries. Photos du drop ELITEWEAR.",
+  "universe.anime.hoodiesBody": "Des hoodies oversize des mêmes séries.",
   "universe.anime.hoodieLabel": "Hoodie",
   "universe.anime.hoodieAlt": "hoodie oversize à motif anime",
   "universe.anime.shopByType": "Acheter par forme",
