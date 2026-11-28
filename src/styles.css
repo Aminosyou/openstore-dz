@@ -3894,11 +3894,7 @@ html[dir="rtl"] .anime-collection-card .c-name {
   color: var(--store-paper);
   background:
     radial-gradient(90% 70% at 80% 0%, rgba(255, 255, 255, 0.06), transparent 60%),
-    repeating-linear-gradient(
-      -45deg,
-      transparent 0 24px,
-      rgba(255, 255, 255, 0.025) 24px 25px
-    ),
+    repeating-linear-gradient(-45deg, transparent 0 24px, rgba(255, 255, 255, 0.025) 24px 25px),
     #3a3a3d;
 }
 
@@ -3927,6 +3923,192 @@ html[dir="rtl"] .anime-collection-card .c-name {
   line-height: 0.8;
   color: rgba(247, 244, 236, 0.1);
   pointer-events: none;
+}
+
+/* ── Anime shapes, browse and filters ─────────────────────────────────────── */
+/* The two shapes the Anime drop is made of, then the page that lists every
+   piece with the filters a buyer actually uses. Same paper and ink, same rules:
+   one hairline border, no shadow, the accent only on the index. */
+.anime-types {
+  padding-block: 56px;
+  border-top: 1px solid var(--outline);
+}
+
+.anime-type-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 26px;
+}
+
+.anime-type-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 210px;
+  padding: 22px;
+  border: 1px solid var(--outline);
+  background: var(--surface);
+  transition:
+    border-color 0.18s var(--store-ease),
+    transform 0.18s var(--store-ease);
+}
+
+.anime-type-card:hover {
+  border-color: var(--on-surface);
+  transform: translateY(-2px);
+}
+
+.anime-type-card:focus-visible {
+  outline: 2px solid var(--on-surface);
+  outline-offset: 2px;
+}
+
+.anime-type-index {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.16em;
+  color: var(--u-accent);
+}
+
+.anime-type-name {
+  margin-top: auto;
+  font-family: var(--font-display);
+  font-size: clamp(1.7rem, 3vw, 2.6rem);
+  font-weight: 800;
+  letter-spacing: -0.045em;
+  line-height: 0.95;
+  text-transform: uppercase;
+  color: var(--on-surface);
+}
+
+html[dir="rtl"] .anime-type-name {
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.anime-type-body {
+  max-width: 34ch;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--on-surface-muted);
+}
+
+.anime-type-count {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--on-surface-muted);
+}
+
+.anime-type-arrow {
+  position: absolute;
+  top: 18px;
+  inset-inline-end: 18px;
+  color: var(--on-surface-muted);
+}
+
+.anime-type-card:hover .anime-type-arrow {
+  color: var(--on-surface);
+}
+
+.anime-browse-head {
+  padding-block: 4px 24px;
+}
+
+.anime-browse-head .store-page-title {
+  margin-block: 10px 14px;
+}
+
+.anime-filters {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding-block: 18px;
+  border-top: 1px solid var(--outline);
+  border-bottom: 1px solid var(--outline);
+}
+
+.anime-search {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.anime-search-input {
+  flex: 1;
+  min-width: 0;
+  min-height: 40px;
+  padding: 0 12px;
+  border: 1px solid var(--outline);
+  background: var(--surface);
+  color: var(--on-surface);
+  font: inherit;
+}
+
+.anime-search-input:focus-visible {
+  outline: 2px solid var(--on-surface);
+  outline-offset: 1px;
+}
+
+.anime-filter-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.anime-filter-label {
+  min-width: 64px;
+  font-family: var(--font-mono);
+  font-size: 8.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--on-surface-muted);
+}
+
+.anime-sort {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.anime-browse-count {
+  padding-block: 16px;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--on-surface-muted);
+}
+
+.anime-pieces-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+@media (max-width: 767px) {
+  .anime-types {
+    padding-block: 40px;
+  }
+
+  .anime-type-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .anime-type-card {
+    min-height: 170px;
+    padding: 18px;
+  }
+
+  .anime-filter-label {
+    min-width: 100%;
+  }
 }
 
 /* ── Anime hoodies ────────────────────────────────────────────────────────── */

@@ -35,6 +35,7 @@ import { Route as AdminSettingsRouteImport } from './routes/admin.settings'
 import { Route as AdminSlipsRouteImport } from './routes/admin.slips'
 import { Route as AdminWelcomeRouteImport } from './routes/admin.welcome'
 import { Route as AnimeSeriesRouteImport } from './routes/anime_.$series'
+import { Route as AnimeBrowseRouteImport } from './routes/anime_.browse'
 import { Route as ApiAiDriveRouteImport } from './routes/api.ai-drive'
 import { Route as ApiTelegramRouteImport } from './routes/api.telegram'
 import { Route as CategorySlugRouteImport } from './routes/category.$slug'
@@ -175,6 +176,11 @@ const AnimeSeriesRoute = AnimeSeriesRouteImport.update({
   path: '/anime/$series',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AnimeBrowseRoute = AnimeBrowseRouteImport.update({
+  id: '/anime_/browse',
+  path: '/anime/browse',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiAiDriveRoute = ApiAiDriveRouteImport.update({
   id: '/api/ai-drive',
   path: '/api/ai-drive',
@@ -248,6 +254,7 @@ export interface FileRoutesByFullPath {
   '/admin/slips': typeof AdminSlipsRoute
   '/admin/welcome': typeof AdminWelcomeRoute
   '/anime/$series': typeof AnimeSeriesRoute
+  '/anime/browse': typeof AnimeBrowseRoute
   '/api/ai-drive': typeof ApiAiDriveRoute
   '/api/telegram': typeof ApiTelegramRoute
   '/category/$slug': typeof CategorySlugRoute
@@ -284,6 +291,7 @@ export interface FileRoutesByTo {
   '/admin/slips': typeof AdminSlipsRoute
   '/admin/welcome': typeof AdminWelcomeRoute
   '/anime/$series': typeof AnimeSeriesRoute
+  '/anime/browse': typeof AnimeBrowseRoute
   '/api/ai-drive': typeof ApiAiDriveRoute
   '/api/telegram': typeof ApiTelegramRoute
   '/category/$slug': typeof CategorySlugRoute
@@ -322,6 +330,7 @@ export interface FileRoutesById {
   '/admin/slips': typeof AdminSlipsRoute
   '/admin/welcome': typeof AdminWelcomeRoute
   '/anime_/$series': typeof AnimeSeriesRoute
+  '/anime_/browse': typeof AnimeBrowseRoute
   '/api/ai-drive': typeof ApiAiDriveRoute
   '/api/telegram': typeof ApiTelegramRoute
   '/category/$slug': typeof CategorySlugRoute
@@ -361,6 +370,7 @@ export interface FileRouteTypes {
     | '/admin/slips'
     | '/admin/welcome'
     | '/anime/$series'
+    | '/anime/browse'
     | '/api/ai-drive'
     | '/api/telegram'
     | '/category/$slug'
@@ -397,6 +407,7 @@ export interface FileRouteTypes {
     | '/admin/slips'
     | '/admin/welcome'
     | '/anime/$series'
+    | '/anime/browse'
     | '/api/ai-drive'
     | '/api/telegram'
     | '/category/$slug'
@@ -434,6 +445,7 @@ export interface FileRouteTypes {
     | '/admin/slips'
     | '/admin/welcome'
     | '/anime_/$series'
+    | '/anime_/browse'
     | '/api/ai-drive'
     | '/api/telegram'
     | '/category/$slug'
@@ -463,6 +475,7 @@ export interface RootRouteChildren {
   StreetwearRoute: typeof StreetwearRoute
   TrackRoute: typeof TrackRoute
   AnimeSeriesRoute: typeof AnimeSeriesRoute
+  AnimeBrowseRoute: typeof AnimeBrowseRoute
   ApiAiDriveRoute: typeof ApiAiDriveRoute
   ApiTelegramRoute: typeof ApiTelegramRoute
   CategorySlugRoute: typeof CategorySlugRoute
@@ -656,6 +669,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AnimeSeriesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/anime_/browse': {
+      id: '/anime_/browse'
+      path: '/anime/browse'
+      fullPath: '/anime/browse'
+      preLoaderRoute: typeof AnimeBrowseRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/ai-drive': {
       id: '/api/ai-drive'
       path: '/api/ai-drive'
@@ -771,6 +791,7 @@ const rootRouteChildren: RootRouteChildren = {
   StreetwearRoute: StreetwearRoute,
   TrackRoute: TrackRoute,
   AnimeSeriesRoute: AnimeSeriesRoute,
+  AnimeBrowseRoute: AnimeBrowseRoute,
   ApiAiDriveRoute: ApiAiDriveRoute,
   ApiTelegramRoute: ApiTelegramRoute,
   CategorySlugRoute: CategorySlugRoute,

@@ -1,4 +1,4 @@
-import { useMemo, type CSSProperties } from "react";
+import { useMemo, useState, type CSSProperties } from "react";
 import { Link } from "@tanstack/react-router";
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import { ErrorState, ProductSkeleton } from "@/components/ui/feedback";
@@ -6,34 +6,50 @@ import { useI18n } from "@/lib/i18n-context";
 import { productImage } from "@/lib/queries";
 import { useUniverseFeed } from "@/lib/universe-feed";
 import { productFacets } from "@/lib/product-facets";
+import {
+  animeTypeCounts,
+  animeTypeOf,
+  EMPTY_ANIME_FILTERS,
+  type AnimeType,
+} from "@/lib/anime-browse";
 import { SERIES } from "@/lib/universe-series";
 import { ANIME_COLLECTIONS } from "@/lib/universe-sections";
 import { labelFor } from "@/lib/universe-taxonomy";
 import { universeConfig } from "@/lib/universes";
+import { AnimeBreadcrumb } from "./anime-breadcrumb";
 import { ProductGrid } from "./product-card";
 import { CrossUniverses } from "./universe-hero";
 
 /**
  * One Anime collection's catalogue.
  *
- * Only pieces filed under this series are shown; the shelves of the other eight
- * collections are one chip away, and the back link always returns to the
- * collections grid. The hero photograph is the first real product photo of the
- * series, never a stock image.
+ * Only pieces filed under this series are shown, and the shape filter keeps the
+ * tees and the hoodies of that series one tap apart. The shelves of the other
+ * eight collections stay at the bottom, the browse page carries a series link
+ * with every filter, and the hero photograph is the first real product photo of
+ * the series, never a stock image.
  */
 export function AnimeCollectionPage({ seriesKey }: { seriesKey: string }) {
   const { t, locale } = useI18n();
   const feed = useUniverseFeed();
-  const config = universeConfig("anime");
   const series = SERIES.find((entry) => entry.key === seriesKey);
+  const [shape, setShape] = useState<AnimeType | "all">("all");
 
-  const products = useMemo(
+  const members = useMemo(
     () =>
       (feed.data ?? []).filter((product) => {
         const facets = productFacets(product);
         return facets.universes.includes("anime") && facets.series.includes(seriesKey);
       }),
     [feed.data, seriesKey],
+  );
+  const counts = useMemo(() => animeTypeCounts(members), [members]);
+  const products = useMemo(
+    () =>
+      shape === "all"
+        ? members
+        : members.filter((product) => animeTypeOf(productFacets(product).types) === shape),
+    [members, shape],
   );
 
   if (!series) return null;
@@ -62,10 +78,90 @@ export function AnimeCollectionPage({ seriesKey }: { seriesKey: string }) {
 
   const position = ANIME_COLLECTIONS.indexOf(seriesKey as (typeof ANIME_COLLECTIONS)[number]) + 1;
   const index = String(position).padStart(2, "0");
-  const image = products.map((product) => productImage(product)).find(Boolean) ?? null;
+  const image = members.map((product) => productImage(product)).find(Boolean) ?? null;
+  const name = labelFor(series, locale);
 
   return (
     <div>
+      <CollectionHero name={name} index={index} image={image} count={members.length} />
+      <section
+        id="pieces"
+        className="container-page scroll-mt-24 py-12"
+        aria-label={t("universe.piecesAria")}
+      >
+        {members.length > 0 && (
+          <ShapeFilter value={shape} onChange={setShape} counts={counts} total={members.length} />
+        )}
+
+        {members.length > 0 && (
+          <div className="anime-pieces-head">
+            <p className="anime-browse-count">{t("universe.count", { count: products.length })}</p>
+            <Link
+              to="/anime/browse"
+              search={{ ...EMPTY_ANIME_FILTERS, series: seriesKey }}
+              className="store-btn store-btn--ghost store-btn--sm"
+            >
+              {t("universe.anime.browseAll")}
+              <ArrowUpRight size={14} aria-hidden="true" />
+            </Link>
+          </div>
+        )}
+
+        {products.length > 0 ? (
+          <ProductGrid products={products} />
+        ) : members.length === 0 ? (
+          <div className="store-universe-empty">
+            <h2>{t("universe.collectionEmptyTitle")}</h2>
+            <p>{t("universe.collectionEmptyBody")}</p>
+            <Link to="/anime" className="store-btn store-btn--fill">
+              {t("universe.anime.backToCollections")}
+            </Link>
+          </div>
+        ) : (
+          <div className="store-universe-empty">
+            <h2>{t("universe.anime.browseEmptyTitle")}</h2>
+            <p>{t("universe.anime.browseEmptyBody")}</p>
+            <button
+              type="button"
+              className="store-btn store-btn--fill"
+              onClick={() => setShape("all")}
+            >
+              {t("universe.anime.clearFilters")}
+            </button>
+          </div>
+        )}
+      </section>
+
+      <SeriesChips current={seriesKey} />
+
+      <div className="container-page">
+        <CrossUniverses universe="anime" />
+      </div>
+    </div>
+  );
+}
+
+/** Breadcrumb and hero band: the collection's name, count and first photo. */
+function CollectionHero({
+  name,
+  index,
+  image,
+  count,
+}: {
+  name: string;
+  index: string;
+  image: string | null;
+  count: number;
+}) {
+  const { t } = useI18n();
+  const config = universeConfig("anime");
+
+  return (
+    <>
+      <div className="container-page">
+        <AnimeBreadcrumb current={name} />
+      </div>
+
       <section
         className="store-universe-hero"
         style={{ "--u-accent": config.accent } as CSSProperties}
@@ -79,10 +175,8 @@ export function AnimeCollectionPage({ seriesKey }: { seriesKey: string }) {
             <p className="store-eyebrow">
               {config.index} — {t("universe.anime.kicker")}
             </p>
-            <h1 className="store-universe-title">{labelFor(series, locale)}</h1>
-            <p className="store-universe-intro">
-              {t("universe.count", { count: products.length })}
-            </p>
+            <h1 className="store-universe-title">{name}</h1>
+            <p className="store-universe-intro">{t("universe.count", { count })}</p>
           </div>
 
           <div className="store-universe-hero-media">
@@ -98,44 +192,68 @@ export function AnimeCollectionPage({ seriesKey }: { seriesKey: string }) {
           </div>
         </div>
       </section>
+    </>
+  );
+}
 
-      <section
-        id="pieces"
-        className="container-page scroll-mt-24 py-12"
-        aria-label={t("universe.piecesAria")}
-      >
-        {products.length === 0 ? (
-          <div className="store-universe-empty">
-            <h2>{t("universe.collectionEmptyTitle")}</h2>
-            <p>{t("universe.collectionEmptyBody")}</p>
-            <Link to="/anime" className="store-btn store-btn--fill">
-              {t("universe.anime.backToCollections")}
-            </Link>
-          </div>
-        ) : (
-          <ProductGrid products={products} />
-        )}
-      </section>
+/** The tees and the hoodies of this series, with live counts. */
+function ShapeFilter({
+  value,
+  onChange,
+  counts,
+  total,
+}: {
+  value: AnimeType | "all";
+  onChange: (next: AnimeType | "all") => void;
+  counts: Record<AnimeType, number>;
+  total: number;
+}) {
+  const { t } = useI18n();
+  const chips: { key: AnimeType | "all"; label: string; count: number }[] = [
+    { key: "all", label: t("universe.anime.allTypes"), count: total },
+    { key: "tee", label: t("universe.type.tee"), count: counts.tee },
+    { key: "hoodie", label: t("universe.type.hoodie"), count: counts.hoodie },
+  ];
 
-      <nav className="container-page pb-12" aria-label={t("universe.series")}>
-        <p className="store-eyebrow">{t("universe.series")}</p>
-        <div className="mt-4 flex flex-wrap gap-2">
-          {ANIME_COLLECTIONS.filter((key) => key !== seriesKey).map((key) => {
-            const entry = SERIES.find((item) => item.key === key);
-            if (!entry) return null;
-            return (
-              <Link key={key} to="/anime/$series" params={{ series: key }} className="store-chip">
-                {labelFor(entry, locale)}
-                <ArrowUpRight size={12} aria-hidden="true" />
-              </Link>
-            );
-          })}
-        </div>
-      </nav>
-
-      <div className="container-page">
-        <CrossUniverses universe="anime" />
-      </div>
+  return (
+    <div className="anime-filter-row" role="group" aria-label={t("universe.anime.filtersType")}>
+      <span className="anime-filter-label">{t("universe.anime.filtersType")}</span>
+      {chips.map((chip) => (
+        <button
+          key={chip.key}
+          type="button"
+          className="store-chip"
+          data-active={value === chip.key || undefined}
+          aria-pressed={value === chip.key}
+          onClick={() => onChange(chip.key)}
+        >
+          {chip.label}
+          <b>{chip.count}</b>
+        </button>
+      ))}
     </div>
+  );
+}
+
+/** The other eight collections, always one tap away. */
+function SeriesChips({ current }: { current: string }) {
+  const { t, locale } = useI18n();
+
+  return (
+    <nav className="container-page pb-12" aria-label={t("universe.series")}>
+      <p className="store-eyebrow">{t("universe.series")}</p>
+      <div className="mt-4 flex flex-wrap gap-2">
+        {ANIME_COLLECTIONS.filter((key) => key !== current).map((key) => {
+          const entry = SERIES.find((item) => item.key === key);
+          if (!entry) return null;
+          return (
+            <Link key={key} to="/anime/$series" params={{ series: key }} className="store-chip">
+              {labelFor(entry, locale)}
+              <ArrowUpRight size={12} aria-hidden="true" />
+            </Link>
+          );
+        })}
+      </div>
+    </nav>
   );
 }

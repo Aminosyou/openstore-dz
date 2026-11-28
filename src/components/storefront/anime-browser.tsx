@@ -3,11 +3,13 @@ import { ErrorState, ProductSkeleton } from "@/components/ui/feedback";
 import { useI18n } from "@/lib/i18n-context";
 import { useUniverseFeed } from "@/lib/universe-feed";
 import { productFacets } from "@/lib/product-facets";
+import { animeTypeCounts } from "@/lib/anime-browse";
 import { ANIME_COLLECTIONS } from "@/lib/universe-sections";
 import { buildUniverse } from "@/lib/universes";
 import { AnimeCollectionsGrid } from "./anime-collections";
 import { AnimeHero } from "./anime-hero";
 import { AnimeHoodies } from "./anime-hoodies";
+import { AnimeTypes } from "./anime-types";
 import { ProductRail } from "./home-rails";
 import { CrossUniverses } from "./universe-hero";
 
@@ -24,6 +26,7 @@ export function AnimeBrowser() {
   const feed = useUniverseFeed();
 
   const catalog = useMemo(() => buildUniverse(feed.data ?? [], "anime"), [feed.data]);
+  const typeCounts = useMemo(() => animeTypeCounts(catalog.members), [catalog.members]);
   const otherPieces = useMemo(
     () =>
       catalog.members.filter((product) => {
@@ -78,6 +81,8 @@ export function AnimeBrowser() {
 
         <AnimeCollectionsGrid products={catalog.members} />
       </section>
+
+      <AnimeTypes counts={typeCounts} />
 
       <AnimeHoodies />
 

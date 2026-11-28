@@ -6,6 +6,19 @@ All notable changes to OpenStore DZ. Format follows
 
 ## [Unreleased]
 
+**Added: the Anime universe can be browsed by shape and filtered.** Anime now carries two
+axes instead of one. The landing page keeps the nine collections first and adds a "shop by
+shape" band with live counts for oversize tees and hoodies, each opening a new page at
+`/anime/browse` filtered to that shape. That page lists every anime piece with filters
+that live in the URL: shape (all, tee, hoodie, other), series (the nine plus "other
+anime"), a search over the name, the slug and the description, and a sort (newest, price
+low to high, price high to low). Each collection page gained a breadcrumb, a shape filter
+with counts for that series, a link to the same list filtered by series, and a first-class
+empty state for a shape with nothing in it. The filtering rules are in
+`src/lib/anime-browse.ts`, apart from the components and covered by 16 unit tests. Nothing
+outside the Anime universe changed: the shared product grid, breadcrumb classes and
+universe configs are reused as they are.
+
 **Changed: four universes, and Anime opens on its collections.** Anime, Streetwear,
 Algeria Design and Football Design are the shop's four universes; Football keeps its
 `/football` route and links, and Algeria Design is new at `/algeria-design`. The Anime
